@@ -7,7 +7,7 @@
 ## Valores iniciais de b e w
 As variáves w e b ficaram com o valor 0.
 ## Valores iniciais de aplha e num_iterations
-num_interations ficou com o valor 1000 e o alpha foi alterado para 0.01, pois com alpha >= 0.012, a reta resultante não converge. Foi necessário importar o .csv para carregar os dados do arquivo "alegrete.csv"
+num_interations ficou com o valor 1000 e o alpha foi alterado para 0.01, pois com alpha >= 0.012, a reta resultante não converge. Foi necessário importar a biblioteca csv para carregar os dados do arquivo "alegrete.csv"
 ## Melhor erro quadrático médio obtido na implementação da regressão linear
 Utilizando os valores para w, b, alpha e num_iterations citados anteriormente, o melhor erro foi 8.529433040552066.
 ## Conclusões
