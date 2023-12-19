@@ -11,10 +11,11 @@ def compute_mse(b, w, data):
     """
     collumn_x = data[:, 0]
     collumn_y = data[:, 1]
-    
-    mse = ((w*collumn_x + b - collumn_y) ** 2).mean()
 
-    return mse
+    aux = (w*collumn_x + b - collumn_y)
+    ret = (aux ** 2).mean()
+
+    return ret
 
 
 def step_gradient(b, w, data, alpha):
@@ -28,12 +29,13 @@ def step_gradient(b, w, data, alpha):
     """
     collumn_x = data[:, 0]
     collumn_y = data[:, 1]
-    prediction_array = (w*collumn_x + b - collumn_y)
+    pred = (w*collumn_x + b - collumn_y)
+
+    w_novo = w - 2*alpha*((pred*collumn_x).mean())
+    b_novo = b - 2*alpha*(pred.mean())
     
-    new_b = b - 2*alpha*(prediction_array.mean())
-    new_w = w - 2*alpha*((prediction_array*collumn_x).mean())
     
-    return new_b, new_w
+    return b_novo, w_novo
 
 
 def fit(data, b, w, alpha, num_iterations):
@@ -51,12 +53,12 @@ def fit(data, b, w, alpha, num_iterations):
     :param num_iterations: int - numero de épocas/iterações para executar a descida de gradiente
     :return: list,list - uma lista com os b e outra com os w obtidos ao longo da execução
     """
-    list_b = [b]
-    list_w = [w]
+    array_b = [b]
+    array_w = [w]
     
     for i in range(num_iterations):
         b, w = step_gradient(b, w, data, alpha)
-        list_b.append(b)
-        list_w.append(w)
+        array_b.append(b)
+        array_w.append(w)
             
-    return list_b, list_w
+    return array_b, array_w
