@@ -13,9 +13,8 @@ def compute_mse(b, w, data):
     collumn_y = data[:, 1]
 
     aux = (w*collumn_x + b - collumn_y)
-    ret = (aux ** 2).mean()
 
-    return ret
+    return (aux ** 2).mean()
 
 
 def step_gradient(b, w, data, alpha):
@@ -30,10 +29,8 @@ def step_gradient(b, w, data, alpha):
     collumn_x = data[:, 0]
     collumn_y = data[:, 1]
     pred = (w*collumn_x + b - collumn_y)
-
     w_novo = w - 2*alpha*((pred*collumn_x).mean())
     b_novo = b - 2*alpha*(pred.mean())
-    
     
     return b_novo, w_novo
 
