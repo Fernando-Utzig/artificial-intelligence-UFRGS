@@ -19,18 +19,26 @@ Considerando um num_interations maior, notamos que o EQM converge para 8.52.
 * Amostras: 60000
 * Tamanho das imagens: 32x32x3
 * Melhor acurácia: 73.84%
+* Conclusão: Mesmo não obtendo uma acurácia tão alta como os outros DataSets, o CIFAR-10 obteve um salto de acurácia de mais de 50% ao aumentar o número de camadas ocultas contidas na rede. Com a inclusão de mais algumas camadas de convolução e max-pooling, obteve-se um refinamento ainda maior no resultado, atingindo o limite de acurácia de 74%.
 ## Cifar-100:
 * Classes: 100
 * Amostras: 60.000
 * Tamanho das imagens: 32x32x3
 * Melhor acurácia: 40.53%
+* Conclusão: Datasets muito grandes, devido a sua grande variedade de classes, são mais difíceis de treinar. Mesmo aumentando significamente a quantidade de camadas da rede, e tentando extrair o máximo de sua capacidade, a acurácia não passou de 40.53%.
 ## MNIST:
 * Classes: 10
 * Amostras: 70.000
 * Tamanho das imagens: 28x28x1
 * Melhor acurácia: 99.28%
+* Conclusão: A combinação de camadas de convolução seguida de max pooling trouxeram bons resultados para a precisão do MSINT chegando em torno de  99,28%. Testes em que foi retirado uma camada e convolução ou max pooling ou os dois reduziram a porcentagem da precisão do aprendizado. O uso do dropout em alguns testes manteve a precisão um pouco superior a testes em que dropout não foi utilizado.
 ## Fashion MNIST:
 * Classes: 10
 * Amostras: 70.000
 * Tamanho das imagens: 28x28x1
-* Melhor acurácia:
+* Melhor acurácia: 93.11%
+* Conclusão: A obtenção de uma boa acurácia de 93.11% na Fashion MNIST pode ser atribuída a características importantes da arquitetura, como a adição de 4 camadas convolucionais com número de filtros igual a 32, 64, 128, 256. Notamos que apenas com 3 camadas convolucionais, a acurácia diminui um pouco. Além disso, sempre após uma camada convolucional, fazemos Dropout e BatchNormalization.
+
+
+
+
