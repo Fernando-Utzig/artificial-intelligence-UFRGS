@@ -15,10 +15,10 @@ Considerando um num_interations maior, notamos que o EQM converge para 8.52.
 
 # Parte 2 - Tensorflow/Keras
 ## CIFAR-10:
-Classes: 10\n
-Amostras: 60000\n
-Tamanho das imagens: 32x32x3\n
-Melhor acurácia: 73.84%\n
+Classes: 10\r\n
+Amostras: 60000\r\n
+Tamanho das imagens: 32x32x3\r\n
+Melhor acurácia: 73.84%\r\n
 ## Cifar-100:
 Classes: 100
 Amostras: 60.000
