@@ -24,52 +24,6 @@ def question2():
     answerNoise = 0.01
     return answerDiscount, answerNoise
 
-def question3a():
-    # get the close reward, risking the cliff
-    answerDiscount = 0.4
-    answerNoise = 0
-    answerLivingReward = -1
-    return answerDiscount, answerNoise, answerLivingReward
-    # If not possible, return 'NOT POSSIBLE'
-
-def question3b():
-    # get the close reward, avoiding the cliff
-    answerDiscount = 0.25
-    answerNoise = 0.25
-    answerLivingReward = 0
-    return answerDiscount, answerNoise, answerLivingReward
-    # If not possible, return 'NOT POSSIBLE'
-
-def question3c():
-    # Prefer the distant exit (+10), risking the cliff (-10)
-    answerDiscount = 0.905
-    answerNoise = 0
-    answerLivingReward = -1
-    return answerDiscount, answerNoise, answerLivingReward
-    # If not possible, return 'NOT POSSIBLE'
-
-def question3d():
-    # Prefer the distant exit (+10), avoiding the cliff (-10)
-    answerDiscount = 0.15
-    answerNoise = 0.05
-    answerLivingReward = 2
-    return answerDiscount, answerNoise, answerLivingReward
-    # If not possible, return 'NOT POSSIBLE'
-
-def question3e():
-    # Avoid both exits and the cliff (so an episode should never terminate)
-    answerDiscount = 0.95
-    answerNoise = 0
-    answerLivingReward = 100
-    return answerDiscount, answerNoise, answerLivingReward
-    # If not possible, return 'NOT POSSIBLE'
-
-def question6():
-    answerEpsilon = None
-    answerLearningRate = None
-    return 'NOT POSSIBLE'
-    # If not possible, return 'NOT POSSIBLE'
-
 if __name__ == '__main__':
     print('Answers to analysis questions:')
     import analysis
