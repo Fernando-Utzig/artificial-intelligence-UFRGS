@@ -105,7 +105,7 @@ class ValueIterationAgent(ValueEstimationAgent):
             max_value = None
             for action in possibleActions:
                 q_value = self.computeQValueFromValues(state, action)
-                if max_value == None: # Primeira execução do for
+                if max_value == None: # Primeira execucao do for
                     max_value = q_value
                     best_action = action
                 elif q_value > max_value:
