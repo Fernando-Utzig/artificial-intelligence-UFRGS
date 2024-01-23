@@ -4,7 +4,7 @@ class Nodo:
     """
     Implemente a classe Nodo com os atributos descritos na funcao init
     """
-    def __init__(self, estado:str, pai:Nodo, acao:str, custo:int):
+    def __init__(self, estado:str, pai, acao:str, custo:int):
         """
         Inicializa o nodo com os atributos recebidos
         :param estado:str, representacao do estado do 8-puzzle
@@ -12,8 +12,10 @@ class Nodo:
         :param acao:str, acao a partir do pai que leva a este nodo (None no caso do nó raiz)
         :param custo:int, custo do caminho da raiz até este nó
         """
-        # substitua a linha abaixo pelo seu codigo
-        raise NotImplementedError
+        self.estado = estado
+        self.pai = pai
+        self.acao = acao
+        self.custo = custo
 
 
 def sucessor(estado:str)->Set[Tuple[str,str]]:
@@ -49,7 +51,7 @@ def sucessor(estado:str)->Set[Tuple[str,str]]:
 
     return ret
 
-    
+# Usado apenas para trocar de posição dois elementos de uma string
 def swap_positions(estado, pos_elemento1, pos_elemento2, acao:str):
     ret_string = ""
     for i in range(len(estado)):
@@ -60,7 +62,7 @@ def swap_positions(estado, pos_elemento1, pos_elemento2, acao:str):
         else:
             ret_string += estado[i]
     
-    return (ret_string, acao)
+    return (acao, ret_string)
 
 
 def expande(nodo:Nodo)->Set[Nodo]:
@@ -70,8 +72,15 @@ def expande(nodo:Nodo)->Set[Nodo]:
     :param nodo: objeto da classe Nodo
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    conjunto_nodos = []
+    # pega os possiveis proximos estados
+    sucessores = sucessor(nodo.estado)
+
+    # cria um conjunto de nodos, cada um correspondente a um próximo estado
+    for i in range(len(sucessores)):
+        conjunto_nodos.append(Nodo(sucessores[i][1], nodo, sucessores[i][0], nodo.custo + 1)) # atribuição dos valores 'pai', 'estado', acao' e 'custo'
+
+    return conjunto_nodos
 
 
 def astar_hamming(estado:str)->list[str]:
