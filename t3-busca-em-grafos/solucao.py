@@ -112,7 +112,7 @@ def astar_hamming(estado:str)->List[str]:
             explorados.add(atual.estado)
 
             for nodo in expande(atual):
-                nodo.custo_estimado = nodo.custo + hamming_distance(nodo.estado, estado_objetivo)
+                nodo.custo = nodo.custo + hamming_distance(nodo.estado, estado_objetivo)
                 heapq.heappush(fronteira, nodo)
 
     return None
