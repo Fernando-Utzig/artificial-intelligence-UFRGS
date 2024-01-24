@@ -1,4 +1,5 @@
 from typing import Iterable, Set, Tuple, List
+import heapq
 
 class Nodo:
     """
@@ -92,8 +93,30 @@ def astar_hamming(estado:str)->List[str]:
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    estado_objetivo = "12345678_"
+    
+    def hamming_distance(estado1: str, estado2: str) -> int:
+        return sum(e1 != e2 for e1, e2 in zip(estado1, estado2))
+
+    fronteira = [(hamming_distance(estado, estado_objetivo), Nodo(estado, None, None, 0))]
+    explorados = set()
+
+    while fronteira:
+        _, atual = heapq.heappop(fronteira)
+
+        if atual.estado == estado_objetivo:
+            return obter_caminho(atual)
+
+        if atual.estado not in explorados:
+            explorados.add(atual.estado)
+
+            for acao, prox_estado in sucessor(atual.estado):
+                if prox_estado not in explorados:
+                    custo = atual.custo + 1
+                    prioridade = custo + hamming_distance(prox_estado, estado_objetivo)
+                    heapq.heappush(fronteira, (prioridade, Nodo(prox_estado, atual, acao, custo)))
+
+    return None
 
 
 def astar_manhattan(estado:str)->List[str]:
@@ -146,3 +169,10 @@ def astar_new_heuristic(estado:str)->List[str]:
     """
     # substituir a linha abaixo pelo seu codigo
     raise NotImplementedError
+
+def obter_caminho(nodo: Nodo) -> List[str]:
+    caminho = []
+    while nodo.pai:
+        caminho.append(nodo.acao)
+        nodo = nodo.pai
+    return caminho[::-1]
