@@ -1,4 +1,5 @@
-from typing import Iterable, Set, Tuple, List
+from typing import Iterable, Set, Tuple
+from queue import PriorityQueue
 
 class Nodo:
     """
@@ -16,6 +17,9 @@ class Nodo:
         self.pai = pai
         self.acao = acao
         self.custo = custo
+
+    def __lt__(self, outro):
+        return self.custo < outro.custo
 
 
 def sucessor(estado:str)->Set[Tuple[str,str]]:
@@ -82,34 +86,111 @@ def expande(nodo:Nodo)->Set[Nodo]:
 
     return conjunto_nodos
 
+def obter_caminho(nodo_atual: Nodo) -> list[str]:
+    # Reconstruir o caminho para o objetivo
+    caminho = []
+    while nodo_atual:
+        caminho.insert(0, nodo_atual.acao)
+        nodo_atual = nodo_atual.pai
+    return caminho[1:]  # Excluindo a ação 'None' do nó raiz
 
-def astar_hamming(estado:str)->List[str]:
+def hamming_distance(estado1: str, estado2: str) -> int:
+    return sum(e1 != e2 for e1, e2 in zip(estado1, estado2))
+
+def astar_hamming(estado:str)->list[str]:
+    # Fila de prioridade para ordenar os nodos com base no custo total (f(n) = g(n) + h(n))
+    fila_prioridade = PriorityQueue()
+
+    # Objetivo
+    estado_objetivo = "12345678_"
+    
+    # Nodo inicial
+    nodo_inicial = Nodo(estado, None, None, 0)
+    fila_prioridade.put((hamming_distance(estado, estado_objetivo), nodo_inicial))
+
+    # Conjunto para manter o controle de estados já visitados
+    estados_visitados = set()
+
+    while not fila_prioridade.empty():
+        _, nodo_atual = fila_prioridade.get()
+
+        # Verificar se chegamos ao objetivo
+        if nodo_atual.estado == estado_objetivo:
+            # Reconstruir o caminho para o objetivo
+            return obter_caminho(nodo_atual)
+
+        # Adicionar estado atual ao conjunto de estados visitados
+        estados_visitados.add(nodo_atual.estado)
+
+        # Gerar filhos do nodo atual
+        filhos = expande(nodo_atual)
+
+        for filho in filhos:
+            if filho.estado not in estados_visitados:
+                # Calcular custo total f(n) = g(n) + h(n)
+                custo_total = filho.custo + hamming_distance(filho.estado, estado_objetivo)
+                fila_prioridade.put((custo_total, filho))
+
+    # Se a fila estiver vazia e não encontramos o objetivo, retornamos None
+    return None
+
+def manhattan_distance(estado, objetivo):
     """
-    Recebe um estado (string), executa a busca A* com h(n) = soma das distâncias de Hamming e
-    retorna uma lista de ações que leva do
-    estado recebido até o objetivo ("12345678_").
-    Caso não haja solução a partir do estado recebido, retorna None
+    Recebe um estado (string) e calcula a quantidade de movimentos que todas peças
+    devem realizar para chegar no mesmo lugar do estado final
     :param estado: str
-    :return:
+    :return: int
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    distancia = 0
 
+    for i in objetivo:
+        if i != "_":
+            pos_atual = estado.index(i)
+            pos_final = objetivo.index(i)
+            linha_atual, coluna_atual = pos_atual // 3, pos_atual % 3
+            linha_final, coluna_final = pos_final // 3, pos_final % 3
+            distancia += abs(linha_atual - linha_final) + abs(coluna_atual - coluna_final)
+    return distancia
 
-def astar_manhattan(estado:str)->List[str]:
-    """
-    Recebe um estado (string), executa a busca A* com h(n) = soma das distâncias de Manhattan e
-    retorna uma lista de ações que leva do
-    estado recebido até o objetivo ("12345678_").
-    Caso não haja solução a partir do estado recebido, retorna None
-    :param estado: str
-    :return:
-    """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+def astar_manhattan(estado:str)->list[str]:
+    # Fila de prioridade para ordenar os nodos com base no custo total (f(n) = g(n) + h(n))
+    fila_prioridade = PriorityQueue()
+
+    # Objetivo
+    objetivo = "12345678_"
+    
+    # Nodo inicial
+    nodo_inicial = Nodo(estado, None, None, 0)
+    fila_prioridade.put((manhattan_distance(estado, objetivo), nodo_inicial))
+
+    # Conjunto para manter o controle de estados já visitados
+    estados_visitados = set()
+
+    while not fila_prioridade.empty():
+        _, nodo_atual = fila_prioridade.get()
+
+        # Verificar se chegamos ao objetivo
+        if nodo_atual.estado == objetivo:
+            # Reconstruir o caminho para o objetivo
+            return obter_caminho(nodo_atual)
+
+        # Adicionar estado atual ao conjunto de estados visitados
+        estados_visitados.add(nodo_atual.estado)
+
+        # Gerar filhos do nodo atual
+        filhos = expande(nodo_atual)
+
+        for filho in filhos:
+            if filho.estado not in estados_visitados:
+                # Calcular custo total f(n) = g(n) + h(n)
+                custo_total = filho.custo + manhattan_distance(filho.estado, objetivo)
+                fila_prioridade.put((custo_total, filho))
+
+    # Se a fila estiver vazia e não encontramos o objetivo, retornamos None
+    return None
 
 #opcional,extra
-def bfs(estado:str)->List[str]:
+def bfs(estado:str)->list[str]:
     """
     Recebe um estado (string), executa a busca em LARGURA e
     retorna uma lista de ações que leva do
@@ -122,7 +203,7 @@ def bfs(estado:str)->List[str]:
     raise NotImplementedError
 
 #opcional,extra
-def dfs(estado:str)->List[str]:
+def dfs(estado:str)->list[str]:
     """
     Recebe um estado (string), executa a busca em PROFUNDIDADE e
     retorna uma lista de ações que leva do
@@ -135,7 +216,7 @@ def dfs(estado:str)->List[str]:
     raise NotImplementedError
 
 #opcional,extra
-def astar_new_heuristic(estado:str)->List[str]:
+def astar_new_heuristic(estado:str)->list[str]:
     """
     Recebe um estado (string), executa a busca A* com h(n) = sua nova heurística e
     retorna uma lista de ações que leva do
