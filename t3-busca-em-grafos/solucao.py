@@ -98,8 +98,9 @@ def astar_hamming(estado:str)->List[str]:
     def hamming_distance(estado1: str, estado2: str) -> int:
         return sum(e1 != e2 for e1, e2 in zip(estado1, estado2))
 
-    fronteira = [(hamming_distance(estado, estado_objetivo), Nodo(estado, None, None, 0))]
     explorados = set()
+    nodo_inicial = Nodo(estado, None, None, 0)
+    fronteira = [nodo_inicial]
 
     while fronteira:
         _, atual = heapq.heappop(fronteira)
@@ -110,11 +111,9 @@ def astar_hamming(estado:str)->List[str]:
         if atual.estado not in explorados:
             explorados.add(atual.estado)
 
-            for acao, prox_estado in sucessor(atual.estado):
-                if prox_estado not in explorados:
-                    custo = atual.custo + 1
-                    prioridade = custo + hamming_distance(prox_estado, estado_objetivo)
-                    heapq.heappush(fronteira, (prioridade, Nodo(prox_estado, atual, acao, custo)))
+            for nodo in expande(atual):
+                nodo.custo_estimado = nodo.custo + hamming_distance(nodo.estado, estado_objetivo)
+                heapq.heappush(fronteira, nodo)
 
     return None
 
