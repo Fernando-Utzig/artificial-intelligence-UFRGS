@@ -1,4 +1,4 @@
-from typing import Iterable, Set, Tuple
+from typing import Iterable, Set, Tuple, List
 
 class Nodo:
     """
@@ -83,7 +83,7 @@ def expande(nodo:Nodo)->Set[Nodo]:
     return conjunto_nodos
 
 
-def astar_hamming(estado:str)->list[str]:
+def astar_hamming(estado:str)->List[str]:
     """
     Recebe um estado (string), executa a busca A* com h(n) = soma das distâncias de Hamming e
     retorna uma lista de ações que leva do
@@ -96,7 +96,7 @@ def astar_hamming(estado:str)->list[str]:
     raise NotImplementedError
 
 
-def astar_manhattan(estado:str)->list[str]:
+def astar_manhattan(estado:str)->List[str]:
     """
     Recebe um estado (string), executa a busca A* com h(n) = soma das distâncias de Manhattan e
     retorna uma lista de ações que leva do
@@ -109,7 +109,7 @@ def astar_manhattan(estado:str)->list[str]:
     raise NotImplementedError
 
 #opcional,extra
-def bfs(estado:str)->list[str]:
+def bfs(estado:str)->List[str]:
     """
     Recebe um estado (string), executa a busca em LARGURA e
     retorna uma lista de ações que leva do
@@ -122,7 +122,7 @@ def bfs(estado:str)->list[str]:
     raise NotImplementedError
 
 #opcional,extra
-def dfs(estado:str)->list[str]:
+def dfs(estado:str)->List[str]:
     """
     Recebe um estado (string), executa a busca em PROFUNDIDADE e
     retorna uma lista de ações que leva do
@@ -135,7 +135,7 @@ def dfs(estado:str)->list[str]:
     raise NotImplementedError
 
 #opcional,extra
-def astar_new_heuristic(estado:str)->list[str]:
+def astar_new_heuristic(estado:str)->List[str]:
     """
     Recebe um estado (string), executa a busca A* com h(n) = sua nova heurística e
     retorna uma lista de ações que leva do
