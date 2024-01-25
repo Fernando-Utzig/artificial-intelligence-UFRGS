@@ -8,7 +8,12 @@
 * Tempo decorrido: 0.244 seg
 * Custo: 23
 
+# BFS
+* Nós expandidos: 501904
+* Tempo decorrido: 1.098 seg
+* Custo: 23 
+
 # A* Manhattan
-* Nós expandidos: 5572
-* Tempo decorrido: 0.033 seg
-* Custo: 23
+* Nós expandidos: 426651
+* Tempo decorrido: 2.911 seg
+* Custo: 101601

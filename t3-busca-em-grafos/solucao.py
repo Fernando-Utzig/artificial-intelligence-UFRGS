@@ -1,5 +1,6 @@
 from typing import Iterable, Set, Tuple
 from queue import PriorityQueue
+from collections import deque
 
 class Nodo:
     """
@@ -213,8 +214,39 @@ def bfs(estado:str)->list[str]:
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    fila = deque()
+
+    # Variável responsável por somar os nós expandidos
+    qtd_nodos_expandidos = 0
+
+    nodo_inicial = Nodo(estado, None, None, 0)
+    fila.append(nodo_inicial)
+
+    estados_visitados = set()
+
+    while fila:
+        nodo_atual = fila.popleft()
+
+        if nodo_atual.estado == "12345678_":
+            caminho = []
+            while nodo_atual:
+                caminho.insert(0, nodo_atual.acao)
+                nodo_atual = nodo_atual.pai
+            print(f"Quantidade nodos expadidos bfs: {qtd_nodos_expandidos}")
+            return caminho[1:]
+
+        estados_visitados.add(nodo_atual.estado)
+
+        filhos = expande(nodo_atual)
+        
+        # Incremento na quantidade de nós expandidos
+        qtd_nodos_expandidos += len(filhos)
+
+        for filho in filhos:
+            if filho.estado not in estados_visitados:
+                fila.append(filho)
+
+    return None
 
 #opcional,extra
 def dfs(estado:str)->list[str]:
@@ -226,8 +258,39 @@ def dfs(estado:str)->list[str]:
     :param estado: str
     :return:
     """
-    # substituir a linha abaixo pelo seu codigo
-    raise NotImplementedError
+    pilha = []
+
+    # Variável responsável por somar os nós expandidos
+    qtd_nodos_expandidos = 0
+
+    nodo_inicial = Nodo(estado, None, None, 0)
+    pilha.append(nodo_inicial)
+
+    estados_visitados = set()
+
+    while pilha:
+        nodo_atual = pilha.pop()
+
+        if nodo_atual.estado == "12345678_":
+            caminho = []
+            while nodo_atual:
+                caminho.insert(0, nodo_atual.acao)
+                nodo_atual = nodo_atual.pai
+            #print(f"Quantidade nodos expadidos dfs: {qtd_nodos_expandidos}")
+            return caminho[1:]
+
+        estados_visitados.add(nodo_atual.estado)
+
+        filhos = expande(nodo_atual)
+
+        # Incremento na quantidade de nós expandidos
+        qtd_nodos_expandidos += len(filhos)
+
+        for filho in filhos:
+            if filho.estado not in estados_visitados:
+                pilha.append(filho)
+
+    return None
 
 #opcional,extra
 def astar_new_heuristic(estado:str)->list[str]:
