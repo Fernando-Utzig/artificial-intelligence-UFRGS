@@ -103,6 +103,9 @@ def astar_hamming(estado:str)->list[str]:
 
     # Objetivo
     estado_objetivo = "12345678_"
+
+    # Variável responsável por somar os nós expandidos
+    qtd_nodos_expandidos = 0
     
     # Nodo inicial
     nodo_inicial = Nodo(estado, None, None, 0)
@@ -116,6 +119,7 @@ def astar_hamming(estado:str)->list[str]:
 
         # Verificar se chegamos ao objetivo
         if nodo_atual.estado == estado_objetivo:
+            # print(f"Quantidade nodos expadidos Hamming: {qtd_nodos_expandidos}")
             # Reconstruir o caminho para o objetivo
             return obter_caminho(nodo_atual)
 
@@ -124,14 +128,18 @@ def astar_hamming(estado:str)->list[str]:
 
         # Gerar filhos do nodo atual
         filhos = expande(nodo_atual)
+        # Incremento na quantidade de nós expandidos
+        qtd_nodos_expandidos += len(filhos)
 
         for filho in filhos:
             if filho.estado not in estados_visitados:
                 # Calcular custo total f(n) = g(n) + h(n)
+                #qtd_nodos_expandidos += 1
                 custo_total = filho.custo + hamming_distance(filho.estado, estado_objetivo)
                 fila_prioridade.put((custo_total, filho))
 
     # Se a fila estiver vazia e não encontramos o objetivo, retornamos None
+    #print(f"Quantidade nodos expadidos Hamming: {qtd_nodos_expandidos}")
     return None
 
 def manhattan_distance(estado, objetivo):
@@ -158,6 +166,9 @@ def astar_manhattan(estado:str)->list[str]:
 
     # Objetivo
     objetivo = "12345678_"
+
+    # Variável responsável por somar os nós expandidos
+    qtd_nodos_expandidos = 0
     
     # Nodo inicial
     nodo_inicial = Nodo(estado, None, None, 0)
@@ -171,6 +182,7 @@ def astar_manhattan(estado:str)->list[str]:
 
         # Verificar se chegamos ao objetivo
         if nodo_atual.estado == objetivo:
+            # print(f"Quantidade nodos expadidos Manhattan: {qtd_nodos_expandidos}")
             # Reconstruir o caminho para o objetivo
             return obter_caminho(nodo_atual)
 
@@ -179,6 +191,8 @@ def astar_manhattan(estado:str)->list[str]:
 
         # Gerar filhos do nodo atual
         filhos = expande(nodo_atual)
+        # Incremento na quantidade de nós expandidos
+        qtd_nodos_expandidos += len(filhos)
 
         for filho in filhos:
             if filho.estado not in estados_visitados:
