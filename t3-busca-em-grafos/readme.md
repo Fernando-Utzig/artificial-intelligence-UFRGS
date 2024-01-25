@@ -13,7 +13,7 @@
 * Tempo decorrido: 1.098 seg
 * Custo: 23 
 
-# A* Manhattan
+# DFS
 * Nós expandidos: 426651
 * Tempo decorrido: 2.911 seg
 * Custo: 101601
